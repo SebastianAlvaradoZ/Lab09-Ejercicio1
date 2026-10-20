@@ -1,54 +1,48 @@
 package com.example.ejercicio1recetas.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = TomateClaro,
+    onPrimary = CafeOscuro,
+    secondary = Naranja,
+    onSecondary = CafeOscuro,
+    tertiary = Color(0xFF7BD8A8),
+    background = CafeOscuro,
+    onBackground = Color(0xFFFFEDE3),
+    surface = Color(0xFF2A1D17),
+    onSurface = Color(0xFFFFEDE3),
+    surfaceVariant = Color(0xFF3F2E25),
+    onSurfaceVariant = Color(0xFFE6CFC2)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+    primary = Tomate,
     onPrimary = Color.White,
-    onSecondary = Color.White,
+    secondary = Naranja,
+    onSecondary = Cafe,
+    tertiary = Verde,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    background = Crema,
+    onBackground = Cafe,
+    surface = Color.White,
+    onSurface = Cafe,
+    surfaceVariant = Color(0xFFFFE6D1),
+    onSurfaceVariant = Color(0xFF5B4336)
 )
 
 @Composable
 fun Ejercicio1RecetasTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+    // Se usa la paleta propia (sin colores dinámicos) para que la app se vea igual en todos los equipos
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
     MaterialTheme(
         colorScheme = colorScheme,
