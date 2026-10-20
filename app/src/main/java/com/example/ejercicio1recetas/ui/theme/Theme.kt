@@ -1,6 +1,5 @@
 package com.example.ejercicio1recetas.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -38,7 +37,9 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun Ejercicio1RecetasTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    // Tema claro por defecto: fondo crema y textos oscuros, legible en cualquier equipo.
+    // Para seguir el modo del sistema, cambiar false por isSystemInDarkTheme()
+    darkTheme: Boolean = false,
     content: @Composable () -> Unit
 ) {
     // Se usa la paleta propia (sin colores dinámicos) para que la app se vea igual en todos los equipos
