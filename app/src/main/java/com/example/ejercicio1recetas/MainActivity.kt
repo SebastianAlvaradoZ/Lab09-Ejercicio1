@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -22,7 +24,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()   // la app dibuja detrás de las barras del sistema
         setContent {
             Ejercicio1RecetasTheme {
-                AppRecetas()
+                // Surface define el color de fondo y el color por defecto de los textos
+                Surface(color = MaterialTheme.colorScheme.background) {
+                    AppRecetas()
+                }
             }
         }
     }
