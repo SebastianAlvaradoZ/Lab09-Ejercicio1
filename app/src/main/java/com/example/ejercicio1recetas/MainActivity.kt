@@ -4,44 +4,53 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.ejercicio1recetas.ui.ScreenDetalle
+import com.example.ejercicio1recetas.ui.ScreenRecetas
 import com.example.ejercicio1recetas.ui.theme.Ejercicio1RecetasTheme
+import com.example.ejercicio1recetas.viewmodel.RecetasViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge()   // la app dibuja detrás de las barras del sistema
         setContent {
             Ejercicio1RecetasTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                AppRecetas()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun AppRecetas() {
+    val navController = rememberNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Ejercicio1RecetasTheme {
-        Greeting("Android")
+    // Un solo ViewModel compartido por las dos pantallas; sobrevive a rotaciones
+    val viewModel: RecetasViewModel = viewModel()
+
+    NavHost(navController = navController, startDestination = "lista") {
+        composable("lista") {
+            ScreenRecetas(
+                viewModel = viewModel,
+                onRecetaClick = { id -> navController.navigate("detalle/$id") }
+            )
+        }
+        composable(
+            route = "detalle/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { entrada ->
+            ScreenDetalle(
+                viewModel = viewModel,
+                id = entrada.arguments!!.getInt("id"),
+                onVolver = { navController.popBackStack() }
+            )
+        }
     }
 }
